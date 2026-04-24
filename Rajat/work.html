@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Work | Rajat Rana</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Outfit',sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    padding:20px 50px;
+    background:rgba(255,255,255,0.08);
+}
+nav a{color:white;text-decoration:none;margin-left:20px;}
+
+h1{
+    text-align:center;
+    margin-top:40px;
+    font-size:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    padding:50px;
+}
+
+.card{
+    border-radius:20px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.4s;
+    background:rgba(255,255,255,0.08);
+}
+
+.card img, .card video{
+    width:100%;
+    display:block;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+}
+
+.card:hover .overlay{opacity:1;}
+
+.overlay span{
+    background:#00f2fe;
+    color:black;
+    padding:10px 20px;
+    border-radius:30px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal img, .modal video{
+    max-width:85%;
+    max-height:85%;
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin:20px;
+    color:#00f2fe;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Rajat Rana</h2>
+    <div>
+        <a href="index.html">Home</a>
+    </div>
+</nav>
+
+<h1>My Work 💼</h1>
+
+<!-- AUTO LOAD -->
+<div class="grid" id="workContainer"></div>
+
+<a href="index.html" class="back">⬅ Back to Home</a>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <span class="close" onclick="closeModal()">✖</span>
+  <div id="modalContent"></div>
+</div>
+
+<script>
+// 🔥 YAHI CONTROL HAI (yaha add karo new images/videos)
+const files = [
+  { type: "image", src: "image/mehndi.png" },
+  { type: "image", src: "image/navratri.jpg" },
+  { type: "image", src: "image/work1.jpg" },
+  { type: "video", src: "image/video.mp4" }
+];
+
+// AUTO LOAD SYSTEM
+let output = "";
+
+files.forEach(file => {
+  if(file.type === "image"){
+    output += `
+      <div class="card" onclick="openModal('${file.src}','image')">
+        <img src="${file.src}">
+      </div>
+    `;
+  } else {
+    output += `
+      <div class="card" onclick="openModal('${file.src}','video')">
+        <video muted loop>
+          <source src="${file.src}">
+        </video>
+      </div>
+    `;
+  }
+});
+
+document.getElementById("workContainer").innerHTML = output;
+
+// MODAL
+function openModal(src,type){
+  const modal = document.getElementById("modal");
+  const content = document.getElementById("modalContent");
+
+  if(type === "image"){
+    content.innerHTML = `<img src="${src}">`;
+  } else {
+    content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+  }
+
+  modal.style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
